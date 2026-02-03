@@ -47,90 +47,83 @@
     <!-- MAIN CONTENT GRID -->
     <main class="dashboard-main">
         
-        <!-- KPI CARDS WITH MODERN DESIGN -->
-        <section class="kpi-section">
-            <h2 class="section-title">
-                <span class="title-icon">📈</span>
-                Market Overview
-            </h2>
-            <div class="kpi-grid">
-                <div class="kpi-card gold">
-                    <div class="kpi-card-header">
-                        <div class="kpi-icon">🥇</div>
-                        <div class="kpi-badge">Gold</div>
-                    </div>
-                    <div class="kpi-card-content">
-                        <div class="kpi-main-value" id="kpi-gold">--</div>
-                        <div class="kpi-meta">
-                            <div class="kpi-date" id="kpi-date">--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="kpi-card silver">
-                    <div class="kpi-card-header">
-                        <div class="kpi-icon">🥈</div>
-                        <div class="kpi-badge">Silver</div>
-                    </div>
-                    <div class="kpi-card-content">
-                        <div class="kpi-main-value" id="kpi-silver">--</div>
-                        <div class="kpi-meta">
-                            <div class="kpi-date" id="kpi-date-2">--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="kpi-card oil">
-                    <div class="kpi-card-header">
-                        <div class="kpi-icon">🛢️</div>
-                        <div class="kpi-badge">Oil</div>
-                    </div>
-                    <div class="kpi-card-content">
-                        <div class="kpi-main-value" id="kpi-oil">--</div>
-                        <div class="kpi-meta">
-                            <div class="kpi-date" id="kpi-date-3">--</div>
-                        </div>
-                    </div>
-                </div>
+        <!-- COMPACT 6 CARDS IN ONE ROW -->
+        <section class="compact-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">📈</span>
+                    Market Overview & Daily Changes
+                </h2>
             </div>
-        </section>
-
-        <!-- PRICE CHANGE CARDS -->
-        <section class="change-section">
-            <h2 class="section-title">
-                <span class="title-icon">📊</span>
-                Daily Changes
-            </h2>
-            <div class="change-grid">
-                <div class="change-card gold">
-                    <div class="change-card-inner">
-                        <div class="change-icon">🥇</div>
-                        <div class="change-content">
-                            <h4 class="change-title">Gold Change</h4>
-                            <div class="change-value" id="change-gold">--</div>
-                            <div class="change-label">24-hour change</div>
+            <div class="compact-row">
+                <!-- Gold KPI -->
+                <div class="compact-card kpi gold">
+                    <div class="compact-card-inner">
+                        <div class="compact-icon">🥇</div>
+                        <div class="compact-content">
+                            <h4 class="compact-label">Gold</h4>
+                            <div class="compact-main-value" id="kpi-gold">--</div>
+                            <div class="compact-date" id="kpi-date">--</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="change-card silver">
-                    <div class="change-card-inner">
-                        <div class="change-icon">🥈</div>
-                        <div class="change-content">
-                            <h4 class="change-title">Silver Change</h4>
-                            <div class="change-value" id="change-silver">--</div>
-                            <div class="change-label">24-hour change</div>
+                <!-- Gold Change -->
+                <div class="compact-card change gold">
+                    <div class="compact-card-inner">
+                        <div class="compact-icon">📈</div>
+                        <div class="compact-content">
+                            <h4 class="compact-label">24H Change</h4>
+                            <div class="compact-value" id="change-gold">--</div>
+                            <div class="compact-sublabel">vs Previous</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="change-card oil">
-                    <div class="change-card-inner">
-                        <div class="change-icon">🛢️</div>
-                        <div class="change-content">
-                            <h4 class="change-title">Oil Change</h4>
-                            <div class="change-value" id="change-oil">--</div>
-                            <div class="change-label">24-hour change</div>
+                <!-- Silver KPI -->
+                <div class="compact-card kpi silver">
+                    <div class="compact-card-inner">
+                        <div class="compact-icon">🥈</div>
+                        <div class="compact-content">
+                            <h4 class="compact-label">Silver</h4>
+                            <div class="compact-main-value" id="kpi-silver">--</div>
+                            <div class="compact-date" id="kpi-date-2">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Silver Change -->
+                <div class="compact-card change silver">
+                    <div class="compact-card-inner">
+                        <div class="compact-icon">📈</div>
+                        <div class="compact-content">
+                            <h4 class="compact-label">24H Change</h4>
+                            <div class="compact-value" id="change-silver">--</div>
+                            <div class="compact-sublabel">vs Previous</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oil KPI -->
+                <div class="compact-card kpi oil">
+                    <div class="compact-card-inner">
+                        <div class="compact-icon">🛢️</div>
+                        <div class="compact-content">
+                            <h4 class="compact-label">Oil</h4>
+                            <div class="compact-main-value" id="kpi-oil">--</div>
+                            <div class="compact-date" id="kpi-date-3">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oil Change -->
+                <div class="compact-card change oil">
+                    <div class="compact-card-inner">
+                        <div class="compact-icon">📈</div>
+                        <div class="compact-content">
+                            <h4 class="compact-label">24H Change</h4>
+                            <div class="compact-value" id="change-oil">--</div>
+                            <div class="compact-sublabel">vs Previous</div>
                         </div>
                     </div>
                 </div>
@@ -182,45 +175,62 @@
             </div>
         </section>
 
-        <!-- DETAILED TREND CHARTS -->
-        <section class="detailed-charts">
-            <h2 class="section-title">
-                <span class="title-icon">📈</span>
-                Price Trends
-            </h2>
-            <div class="charts-grid">
-                <div class="detailed-chart">
-                    <div class="chart-header">
-                        <div class="chart-header-left">
-                            <h4 class="chart-title">Gold Trend</h4>
-                            <span class="chart-period">Last 30 days</span>
+        <!-- PRICE TRENDS - 3 VERTICAL CHARTS -->
+        <section class="trends-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">📈</span>
+                    Price Trends
+                </h2>
+            </div>
+            <div class="trends-vertical">
+                <!-- Gold Trend -->
+                <div class="trend-item">
+                    <div class="trend-chart-header">
+                        <div class="trend-title-group">
+                            <div class="trend-icon">🥇</div>
+                            <div>
+                                <h4 class="trend-title">Gold Price Trend</h4>
+                                <span class="trend-period">Last 30 days</span>
+                            </div>
                         </div>
+                        <div class="trend-current" id="trend-current-gold">--</div>
                     </div>
-                    <div class="chart-wrapper">
+                    <div class="trend-chart-wrapper">
                         <canvas id="chart-1"></canvas>
                     </div>
                 </div>
 
-                <div class="detailed-chart">
-                    <div class="chart-header">
-                        <div class="chart-header-left">
-                            <h4 class="chart-title">Silver Trend</h4>
-                            <span class="chart-period">Last 30 days</span>
+                <!-- Silver Trend -->
+                <div class="trend-item">
+                    <div class="trend-chart-header">
+                        <div class="trend-title-group">
+                            <div class="trend-icon">🥈</div>
+                            <div>
+                                <h4 class="trend-title">Silver Price Trend</h4>
+                                <span class="trend-period">Last 30 days</span>
+                            </div>
                         </div>
+                        <div class="trend-current" id="trend-current-silver">--</div>
                     </div>
-                    <div class="chart-wrapper">
+                    <div class="trend-chart-wrapper">
                         <canvas id="chart-2"></canvas>
                     </div>
                 </div>
 
-                <div class="detailed-chart">
-                    <div class="chart-header">
-                        <div class="chart-header-left">
-                            <h4 class="chart-title">Oil Trend</h4>
-                            <span class="chart-period">Last 30 days</span>
+                <!-- Oil Trend -->
+                <div class="trend-item">
+                    <div class="trend-chart-header">
+                        <div class="trend-title-group">
+                            <div class="trend-icon">🛢️</div>
+                            <div>
+                                <h4 class="trend-title">Oil Price Trend</h4>
+                                <span class="trend-period">Last 30 days</span>
+                            </div>
                         </div>
+                        <div class="trend-current" id="trend-current-oil">--</div>
                     </div>
-                    <div class="chart-wrapper">
+                    <div class="trend-chart-wrapper">
                         <canvas id="chart-3"></canvas>
                     </div>
                 </div>
