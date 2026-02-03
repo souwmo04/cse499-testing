@@ -1,4 +1,4 @@
-let chart1, chart2, chart3; // Global variables to store Chart instances 
+let chart1, chart2, chart3, barChart, pieChart; // Global variables
 
 // Function to initialize or update charts
 function initializeCharts(data) {
@@ -6,12 +6,14 @@ function initializeCharts(data) {
     const ctx2 = document.getElementById('chart-2').getContext('2d');
     const ctx3 = document.getElementById('chart-3').getContext('2d');
 
-    // Destroy previous charts if they exist
+    // Destroy previous line charts if they exist
     if (chart1) chart1.destroy();
     if (chart2) chart2.destroy();
     if (chart3) chart3.destroy();
 
-    // Gold chart
+    // =========================
+    // LINE CHARTS
+    // =========================
     chart1 = new Chart(ctx1, {
         type: 'line',
         data: {
@@ -27,7 +29,6 @@ function initializeCharts(data) {
         options: { responsive: true }
     });
 
-    // Silver chart
     chart2 = new Chart(ctx2, {
         type: 'line',
         data: {
@@ -43,7 +44,6 @@ function initializeCharts(data) {
         options: { responsive: true }
     });
 
-    // Oil chart
     chart3 = new Chart(ctx3, {
         type: 'line',
         data: {
@@ -59,90 +59,171 @@ function initializeCharts(data) {
         options: { responsive: true }
     });
 
-    // Update stats cards
+    // =========================
+    // STATS CARDS
+    // =========================
     const totalRecords = document.getElementById('total-records');
     const lastUpdated = document.getElementById('last-updated');
     if (totalRecords) totalRecords.textContent = data.dates.length;
     if (lastUpdated) lastUpdated.textContent = new Date().toLocaleTimeString();
-}
 
-// Function to fetch latest chart data from Django API
-function fetchChartData() {
-    fetch('/dashboard/api/chart-data/')
-        .then(response => response.json())
-        .then(data => initializeCharts(data))
-        .catch(error => console.error('Error fetching chart data:', error));
-}
+    if (data.dates.length > 0) {
+        const lastIndex = data.dates.length - 1;
 
-// Safe CSRF token getter
-function getCSRFToken() {
-    const token = document.querySelector('[name=csrfmiddlewaretoken]');
-    if (!token) {
-        console.error("CSRF token not found in DOM");
-        return '';
-    }
-    return token.value;
-}
+        // =========================
+        // KPI UPDATE
+        // =========================
+        document.getElementById('kpi-gold').textContent = data.gold[lastIndex];
+        document.getElementById('kpi-silver').textContent = data.silver[lastIndex];
+        document.getElementById('kpi-oil').textContent = data.oil[lastIndex];
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-    fetchChartData();           // Initial load
-    setInterval(fetchChartData, 10000); // Refresh every 10 seconds
+        document.getElementById('kpi-date').textContent = data.dates[lastIndex];
+        document.getElementById('kpi-date-2').textContent = data.dates[lastIndex];
+        document.getElementById('kpi-date-3').textContent = data.dates[lastIndex];
 
-    // Attach snapshot button listener safely
-    const snapshotBtn = document.getElementById('saveSnapshotBtn');
-    if (!snapshotBtn) {
-        console.warn("Save Snapshot button not found");
-        return;
-    }
+        // =========================
+        // CHANGE DETECTION PANEL
+        // =========================
+        const prevIndex = lastIndex - 1 >= 0 ? lastIndex - 1 : 0;
 
-    snapshotBtn.addEventListener('click', () => {
-        // Get all chart canvases
-        const c1 = document.getElementById('chart-1');
-        const c2 = document.getElementById('chart-2');
-        const c3 = document.getElementById('chart-3');
+        const goldChange = data.gold[lastIndex] - data.gold[prevIndex];
+        const silverChange = data.silver[lastIndex] - data.silver[prevIndex];
+        const oilChange = data.oil[lastIndex] - data.oil[prevIndex];
 
-        if (!c1 || !c2 || !c3) {
-            alert("Charts are not ready yet");
-            return;
+        function formatChange(value) {
+            if (value > 0) return `↑ ${value.toFixed(2)}`;
+            else if (value < 0) return `↓ ${Math.abs(value).toFixed(2)}`;
+            else return `→ 0`;
         }
 
-        // Create a new temporary canvas to combine all charts
-        const combinedCanvas = document.createElement('canvas');
-        const width = Math.max(c1.width, c2.width, c3.width);
-        const height = c1.height + c2.height + c3.height;
-        combinedCanvas.width = width;
-        combinedCanvas.height = height;
-        const ctx = combinedCanvas.getContext('2d');
+        document.getElementById('change-gold').textContent = formatChange(goldChange);
+        document.getElementById('change-silver').textContent = formatChange(silverChange);
+        document.getElementById('change-oil').textContent = formatChange(oilChange);
 
-        // Draw each chart onto the combined canvas
-        ctx.drawImage(c1, 0, 0);
-        ctx.drawImage(c2, 0, c1.height);
-        ctx.drawImage(c3, 0, c1.height + c2.height);
+        // =========================
+        // BAR CHART (LATEST COMPARISON)
+        // =========================
+        const barData = {
+            labels: ['Gold', 'Silver', 'Oil'],
+            datasets: [{
+                label: 'Latest Price',
+                data: [
+                    data.gold[lastIndex],
+                    data.silver[lastIndex],
+                    data.oil[lastIndex]
+                ],
+                backgroundColor: ['#f59e0b', '#9ca3af', '#2563eb']
+            }]
+        };
 
-        // Convert combined canvas to image
-        const imageData = combinedCanvas.toDataURL('image/png');
+        const barCtx = document.getElementById('bar-chart').getContext('2d');
+        if (barChart) barChart.destroy();
 
-        // Send to backend
-        fetch('/dashboard/save-snapshot/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            },
-            body: JSON.stringify({ image: imageData })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert("Snapshot saved successfully!");
-            } else {
-                alert("Failed to save snapshot: " + (data.error || ""));
+        barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: barData,
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: false } }
             }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Failed to save snapshot");
         });
-    });
+
+        // =========================
+        // PIE CHART (LATEST DISTRIBUTION)
+        // =========================
+        const latestValues = [
+            data.gold[lastIndex],
+            data.silver[lastIndex],
+            data.oil[lastIndex]
+        ];
+
+        const pieCtx = document.getElementById('pie-chart').getContext('2d');
+        if (pieChart) pieChart.destroy();
+
+        pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Gold', 'Silver', 'Oil'],
+                datasets: [{ data: latestValues, backgroundColor: ['#f59e0b', '#9ca3af', '#2563eb'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+}
+
+// =========================
+// FETCH DATA
+// =========================
+function fetchChartData() {
+    fetch('/dashboard/api/chart-data/')
+        .then(res => res.json())
+        .then(data => initializeCharts(data))
+        .catch(err => console.error('Error fetching chart data:', err));
+}
+
+// =========================
+// CSRF TOKEN
+// =========================
+function getCSRFToken() {
+    const token = document.querySelector('[name=csrfmiddlewaretoken]');
+    return token ? token.value : '';
+}
+
+// =========================
+// INIT
+// =========================
+document.addEventListener('DOMContentLoaded', function() {
+    fetchChartData();
+    setInterval(fetchChartData, 10000);
+
+    // =========================
+    // SNAPSHOT BUTTON WITH TIMESTAMP & SIZE LIMIT
+    // =========================
+    const snapshotBtn = document.getElementById('saveSnapshotBtn');
+    if (snapshotBtn) {
+        snapshotBtn.addEventListener('click', () => {
+            const dashboardElement = document.getElementById('dashboard-container');
+
+            html2canvas(dashboardElement).then(canvas => {
+                // Limit max width/height
+                const MAX_WIDTH = 1200;
+                const MAX_HEIGHT = 1200;
+                const scale = Math.min(MAX_WIDTH / canvas.width, MAX_HEIGHT / canvas.height, 1);
+
+                const resizedCanvas = document.createElement('canvas');
+                resizedCanvas.width = canvas.width * scale;
+                resizedCanvas.height = canvas.height * scale;
+
+                const ctx = resizedCanvas.getContext('2d');
+                ctx.scale(scale, scale);
+                ctx.drawImage(canvas, 0, 0);
+
+                // Add timestamp overlay
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "red";
+                ctx.fillText(new Date().toLocaleString(), 10 / scale, 20 / scale);
+
+                const imageData = resizedCanvas.toDataURL('image/png');
+
+                fetch('/dashboard/save-snapshot/', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: JSON.stringify({ image: imageData })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') alert("Snapshot saved successfully!");
+                    else alert("Failed to save snapshot: " + (data.error || ""));
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Failed to save snapshot");
+                });
+            });
+        });
+    }
 });

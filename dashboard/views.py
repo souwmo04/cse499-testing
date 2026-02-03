@@ -22,18 +22,10 @@ def landing_page(request):
 # Dashboard page
 # -------------------------
 def dashboard_page(request):
-    """
-    Renders the dashboard page and passes initial CSV data for Chart.js.
-    """
     csv_file = os.path.join(settings.BASE_DIR, 'data', 'financial_data.csv')
-
-    if not os.path.exists(csv_file):
-        return render(request, 'dashboard/dashboard.html', {
-            "chart_data": {}
-        })
-
     df = pd.read_csv(csv_file)
 
+    # Chart data (already working)
     chart_data = {
         "dates": df['date'].tolist(),
         "gold": df['gold_price'].tolist(),
@@ -41,9 +33,24 @@ def dashboard_page(request):
         "oil": df['oil_price'].tolist()
     }
 
-    return render(request, 'dashboard/dashboard.html', {
-        "chart_data": chart_data
-    })
+    # Latest values for KPI cards
+    latest_row = df.iloc[-1]
+
+    kpi_data = {
+        "gold_latest": latest_row['gold_price'],
+        "silver_latest": latest_row['silver_price'],
+        "oil_latest": latest_row['oil_price'],
+        "last_date": latest_row['date']
+    }
+
+    return render(
+        request,
+        'dashboard/dashboard.html',
+        {
+            "chart_data": chart_data,
+            "kpi": kpi_data
+        }
+    )
 
 
 # -------------------------
