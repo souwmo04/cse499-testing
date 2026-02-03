@@ -10,118 +10,335 @@
 {% block content %}
 
 <div id="dashboard-container">
+    
+    <!-- HEADER WITH MODERN DESIGN -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="header-top">
+                <h1 class="page-title">Dynamic Dashboard</h1>
+            </div>
+            <p class="subtitle">Real-time market insights with AI-powered analytics</p>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="total-records">{{ chart_data.dates|length }}</div>
+                        <div class="stat-label">Total Records</div>
+                    </div>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-icon">🕐</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="last-updated">Just now</div>
+                        <div class="stat-label">Last Updated</div>
+                    </div>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="charts-active">3</div>
+                        <div class="stat-label">Active Charts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <!-- PAGE TITLE & SUBTITLE -->
-    <div class="dashboard-header">
-        <h2 class="page-title">Live Dynamic Dashboard</h2>
-        <p class="subtitle">Visualize time-varying data and ask AI questions about trends.</p>
-    </div>
+    <!-- MAIN CONTENT GRID -->
+    <main class="dashboard-main">
+        
+        <!-- KPI CARDS WITH MODERN DESIGN -->
+        <section class="kpi-section">
+            <h2 class="section-title">
+                <span class="title-icon">📈</span>
+                Market Overview
+            </h2>
+            <div class="kpi-grid">
+                <div class="kpi-card gold">
+                    <div class="kpi-card-header">
+                        <div class="kpi-icon">🥇</div>
+                        <div class="kpi-badge">Gold</div>
+                    </div>
+                    <div class="kpi-card-content">
+                        <div class="kpi-main-value" id="kpi-gold">--</div>
+                        <div class="kpi-meta">
+                            <div class="kpi-date" id="kpi-date">--</div>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- STATS CARDS (TOP SECTION) -->
-    <section class="stats-grid top-stats">
-        <div class="stat-card">
-            <h4>Total Records</h4>
-            <p id="total-records">{{ chart_data.dates|length }}</p>
-        </div>
-        <div class="stat-card">
-            <h4>Last Updated</h4>
-            <p id="last-updated">Just now</p>
-        </div>
-        <div class="stat-card">
-            <h4>Charts Active</h4>
-            <p id="charts-active">3</p>
-        </div>
-    </section>
+                <div class="kpi-card silver">
+                    <div class="kpi-card-header">
+                        <div class="kpi-icon">🥈</div>
+                        <div class="kpi-badge">Silver</div>
+                    </div>
+                    <div class="kpi-card-content">
+                        <div class="kpi-main-value" id="kpi-silver">--</div>
+                        <div class="kpi-meta">
+                            <div class="kpi-date" id="kpi-date-2">--</div>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- KPI SUMMARY CARDS -->
-    <div class="kpi-container">
-        <div class="kpi-card gold">
-            <h3>Gold (Latest)</h3>
-            <p id="kpi-gold">--</p>
-            <span id="kpi-date">--</span>
+                <div class="kpi-card oil">
+                    <div class="kpi-card-header">
+                        <div class="kpi-icon">🛢️</div>
+                        <div class="kpi-badge">Oil</div>
+                    </div>
+                    <div class="kpi-card-content">
+                        <div class="kpi-main-value" id="kpi-oil">--</div>
+                        <div class="kpi-meta">
+                            <div class="kpi-date" id="kpi-date-3">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICE CHANGE CARDS -->
+        <section class="change-section">
+            <h2 class="section-title">
+                <span class="title-icon">📊</span>
+                Daily Changes
+            </h2>
+            <div class="change-grid">
+                <div class="change-card gold">
+                    <div class="change-card-inner">
+                        <div class="change-icon">🥇</div>
+                        <div class="change-content">
+                            <h4 class="change-title">Gold Change</h4>
+                            <div class="change-value" id="change-gold">--</div>
+                            <div class="change-label">24-hour change</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="change-card silver">
+                    <div class="change-card-inner">
+                        <div class="change-icon">🥈</div>
+                        <div class="change-content">
+                            <h4 class="change-title">Silver Change</h4>
+                            <div class="change-value" id="change-silver">--</div>
+                            <div class="change-label">24-hour change</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="change-card oil">
+                    <div class="change-card-inner">
+                        <div class="change-icon">🛢️</div>
+                        <div class="change-content">
+                            <h4 class="change-title">Oil Change</h4>
+                            <div class="change-value" id="change-oil">--</div>
+                            <div class="change-label">24-hour change</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPARISON CHARTS -->
+        <section class="chart-section">
+            <div class="chart-comparison">
+                <div class="chart-container bar-chart">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <span class="chart-title-icon">📊</span>
+                            Latest Price Comparison
+                        </h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="bar-chart"></canvas>
+                    </div>
+                    <div class="chart-footer">
+                        <div class="chart-legend">
+                            <div class="legend-item gold">
+                                <span class="legend-dot"></span>
+                                <span class="legend-label">Gold</span>
+                            </div>
+                            <div class="legend-item silver">
+                                <span class="legend-dot"></span>
+                                <span class="legend-label">Silver</span>
+                            </div>
+                            <div class="legend-item oil">
+                                <span class="legend-dot"></span>
+                                <span class="legend-label">Oil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container pie-chart">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <span class="chart-title-icon">📈</span>
+                            Price Distribution
+                        </h3>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETAILED TREND CHARTS -->
+        <section class="detailed-charts">
+            <h2 class="section-title">
+                <span class="title-icon">📈</span>
+                Price Trends
+            </h2>
+            <div class="charts-grid">
+                <div class="detailed-chart">
+                    <div class="chart-header">
+                        <div class="chart-header-left">
+                            <h4 class="chart-title">Gold Trend</h4>
+                            <span class="chart-period">Last 30 days</span>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-1"></canvas>
+                    </div>
+                </div>
+
+                <div class="detailed-chart">
+                    <div class="chart-header">
+                        <div class="chart-header-left">
+                            <h4 class="chart-title">Silver Trend</h4>
+                            <span class="chart-period">Last 30 days</span>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-2"></canvas>
+                    </div>
+                </div>
+
+                <div class="detailed-chart">
+                    <div class="chart-header">
+                        <div class="chart-header-left">
+                            <h4 class="chart-title">Oil Trend</h4>
+                            <span class="chart-period">Last 30 days</span>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-3"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-section">
+            <button id="saveSnapshotBtn" class="snapshot-btn">
+                <span class="btn-icon">📸</span>
+                <span class="btn-text">Save Dashboard Snapshot</span>
+                <span class="btn-subtext">Export as PNG</span>
+            </button>
         </div>
 
-        <div class="kpi-card silver">
-            <h3>Silver (Latest)</h3>
-            <p id="kpi-silver">--</p>
-            <span id="kpi-date-2">--</span>
-        </div>
+        <!-- AI ASSISTANT -->
+        <section class="ai-section">
+            <div class="ai-container">
+                <div class="ai-header">
+                    <div class="ai-header-left">
+                        <div class="ai-icon">🤖</div>
+                        <div class="ai-title">
+                            <h3>AI Dashboard Assistant</h3>
+                            <p class="ai-subtitle">Ask questions about trends and insights</p>
+                        </div>
+                    </div>
+                    <div class="ai-header-right">
+                        <div class="ai-status online">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Online</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-body">
+                    <div class="ai-input-group">
+                        <input type="text" 
+                               placeholder="Example: What's the correlation between gold and oil prices?" 
+                               id="ai-question"
+                               class="ai-input"/>
+                        <button id="ask-ai-btn" class="ai-btn">
+                            <span class="btn-text">Ask AI</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+                    
+                    <div id="ai-answer" class="ai-answer">
+                        <div class="ai-placeholder">
+                            <div class="placeholder-icon">💡</div>
+                            <div class="placeholder-content">
+                                <h4>Ready to help!</h4>
+                                <p>Ask me anything about the dashboard data, trends, or predictions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="kpi-card oil">
-            <h3>Oil (Latest)</h3>
-            <p id="kpi-oil">--</p>
-            <span id="kpi-date-3">--</span>
-        </div>
-    </div>
-
-    <!-- CHANGE DETECTION PANEL -->
-    <div class="change-panel">
-        <div class="change-card gold">
-            <h4>Gold</h4>
-            <p id="change-gold">--</p>
-        </div>
-        <div class="change-card silver">
-            <h4>Silver</h4>
-            <p id="change-silver">--</p>
-        </div>
-        <div class="change-card oil">
-            <h4>Oil</h4>
-            <p id="change-oil">--</p>
-        </div>
-    </div>
-
-    <!-- BAR + PIE CHARTS SIDE BY SIDE -->
-    <div class="chart-flex">
-        <!-- Bar Chart -->
-        <div class="chart-card">
-            <h2 class="section-title">Latest Price Comparison</h2>
-            <canvas id="bar-chart"></canvas>
-        </div>
-
-        <!-- Pie Chart -->
-        <div class="chart-card">
-            <h2 class="section-title">Price Distribution (Latest)</h2>
-            <canvas id="pie-chart"></canvas>
-        </div>
-    </div>
-
-    <!-- LINE CHARTS GRID -->
-    <section class="charts">
-        <div class="chart-box">
-            <canvas id="chart-1"></canvas>
-        </div>
-        <div class="chart-box">
-            <canvas id="chart-2"></canvas>
-        </div>
-        <div class="chart-box">
-            <canvas id="chart-3"></canvas>
-        </div>
-    </section>
-
-    <!-- SNAPSHOT BUTTON -->
-    <div class="snapshot-action">
-        <button id="saveSnapshotBtn">📸 Save Snapshot</button>
-    </div>
-
-    <form id="csrf-form">
-        {% csrf_token %}
-    </form>
-
-    <!-- ASK AI PANEL -->
-    <section id="ask-ai" class="ask-ai">
-        <h3>Ask AI About This Dashboard</h3>
-        <div class="ai-input-group">
-            <input type="text" placeholder="Type your question here..." id="ai-question"/>
-            <button id="ask-ai-btn">Ask</button>
-        </div>
-        <div id="ai-answer" class="ai-answer"></div>
-    </section>
+    </main>
 
 </div> <!-- END dashboard-container -->
+
+<form id="csrf-form" style="display: none;">
+    {% csrf_token %}
+</form>
 
 <!-- Pass chart_data to JS -->
 <script>
     const chartData = {{ chart_data|safe }};
+    
+    // Snapshot function to ensure clarity
+    document.getElementById('saveSnapshotBtn').addEventListener('click', function() {
+        // Disable animations and transitions temporarily
+        document.body.classList.add('snapshot-mode');
+        
+        // Force repaint
+        void document.body.offsetWidth;
+        
+        // Take snapshot using html2canvas
+        html2canvas(document.getElementById('dashboard-container'), {
+            scale: 2, // High resolution for clarity
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            removeContainer: false,
+            onclone: function(clonedDoc) {
+                // Enhance clarity in cloned document
+                const container = clonedDoc.getElementById('dashboard-container');
+                container.style.backgroundColor = '#ffffff';
+                container.style.boxShadow = 'none';
+                container.style.border = 'none';
+                
+                // Make text black for better visibility
+                const allText = clonedDoc.querySelectorAll('*');
+                allText.forEach(el => {
+                    if (window.getComputedStyle(el).color) {
+                        const color = window.getComputedStyle(el).color;
+                        if (color.includes('rgb') && !color.includes('255, 255, 255')) {
+                            el.style.color = '#000000';
+                        }
+                    }
+                });
+            }
+        }).then(canvas => {
+            // Convert to image
+            const image = canvas.toDataURL('image/png', 1.0);
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.download = 'dashboard-snapshot-' + new Date().getTime() + '.png';
+            link.href = image;
+            link.click();
+            
+            // Re-enable animations
+            document.body.classList.remove('snapshot-mode');
+        });
+    });
 </script>
 
 <!-- Chart.js & html2canvas CDN -->
