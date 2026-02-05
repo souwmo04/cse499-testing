@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Django
+*.log
+local_settings.py
+media/
+media/snapshots/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dylib
+
+# Test / coverage
+.coverage
+htmlcov/
+
+# Misc
+.DS_Store
+.env
