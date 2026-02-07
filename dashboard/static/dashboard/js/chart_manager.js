@@ -46,7 +46,7 @@ function initializeCharts(data) {
             x: {
                 display: true,
                 grid: { display: false },
-                ticks: { maxTicksLimit: 6, font: { size: 10 } }
+                ticks: { maxTicksLimit: 15, font: { size: 10 } }
             },
             y: {
                 display: true,
@@ -55,7 +55,7 @@ function initializeCharts(data) {
             }
         },
         elements: {
-            point: { radius: 0, hoverRadius: 4 },
+            point: { radius: 3, hoverRadius: 8 },
             line: { tension: 0.4 }
         }
     };
